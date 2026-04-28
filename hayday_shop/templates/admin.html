@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel - HayDayLüks</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f4f4; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #2c3e50; color: white; }
+        .btn-edit { color: blue; text-decoration: none; margin-right: 10px; font-weight: bold; }
+        .btn-del { color: red; text-decoration: none; font-weight: bold; }
+        input, select { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="display: flex; justify-content: space-between;">
+            <h1>HayDayLüks Admin</h1>
+            <a href="{{ url_for('logout') }}" style="color: red; font-weight: bold;">Çıxış Et</a>
+        </div>
+
+        <h3>🆕 Yeni Məhsul Əlavə Et</h3>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Məhsul adı" required>
+            <input type="number" step="0.01" name="price" placeholder="Qiymət (AZN)" required>
+            
+            <label>Kateqoriya seçin:</label>
+            <select name="category" required>
+                <option value="yükseltme">Yükseltme</option>
+                <option value="genişletme">Genişletme</option>
+                <option value="ürün">Ürün</option>
+                <option value="depo">Depo</option>
+                <option value="altınlar">Altınlar</option>
+            </select>
+
+            <input type="file" name="image" required>
+            <button type="submit" style="width:100%; padding:12px; background:#27ae60; color:white; border:none; cursor:pointer; font-weight:bold;">Məhsulu Sistəmə Əlavə Et</button>
+        </form>
+
+        <hr>
+
+        <h3>📦 Mövcud Məhsullar</h3>
+        <table>
+            <tr>
+                <th>Şəkil</th>
+                <th>Ad</th>
+                <th>Qiymət</th>
+                <th>Kateqoriya</th>
+                <th>Əməliyyat</th>
+            </tr>
+            {% for p in products %}
+            <tr>
+                <td><img src="{{ url_for('static', filename='uploads/' + p[4]) }}" width="50"></td>
+                <td>{{ p[1] }}</td>
+                <td>{{ p[2] }} AZN</td>
+                <td>{{ p[3] }}</td>
+                <td>
+                    <a href="{{ url_for('edit_product', id=p[0]) }}" class="btn-edit">📝 Düzenle</a>
+                    <a href="{{ url_for('delete_product', id=p[0]) }}" class="btn-del" onclick="return confirm('Məhsulu silmək istəyirsiniz?')">❌ Sil</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <a href="{{ url_for('index') }}">← Mağazaya Qayıt</a>
+    </div>
+</body>
+</html>
