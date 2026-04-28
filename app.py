@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://admin:lEEPGCGEeQ1xph85uxWizzt9vciIFjFv@dpg-d7og383eo5us73e70060-a/nexora_db_flb7'
 db=SQLAlchemy(app)
 
 BASE_DIR= os.path.abspath(os.path.dirname(__file__))
