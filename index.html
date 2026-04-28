@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXORA| Sifariş</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <div class="logo">shopier</div>
+    <div class="logo-area"><h1>NEXORA | HAYDAYÜRÜN</h1></div>
+</header>
+
+
+<header>
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;">
+        <div class="logo">HAYDAYLÜKS</div>
+        <a href="{{ url_for('cart') }}" style="background: orange; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+            🛒 Səbətim ({{ session.get('cart', [])|length }})
+        </a>
+    </div>
+</header>
+
+
+
+<style>
+    .category-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 20px;
+        background: #fdfdfd;
+        flex-wrap: wrap;
+    }
+
+    .cat-link {
+        text-decoration: none;
+        padding: 12px 20px;
+        border-radius: 25px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        background-color: #e8f5e9; /* Açıq yaşıl arxa fon */
+        color: #2e7d32;
+        border: 2px solid transparent;
+    }
+
+    .cat-link:hover, .cat-link.active {
+        background-color: #e3f2fd; /* Seçildikdə açıq mavi */
+        color: #1565c0;
+        border-color: #1565c0;
+        transform: translateY(-3px);
+    }
+</style>
+
+<div class="category-container">
+    <a href="{{ url_for('index', category='tüm') }}" class="cat-link">Tüm Mehsullar</a>
+    <a href="{{ url_for('index', category='yükseltme') }}" class="cat-link">Yükseltme</a>
+    <a href="{{ url_for('index', category='genişletme') }}" class="cat-link">Genişletme</a>
+    <a href="{{ url_for('index', category='ürün') }}" class="cat-link">Ürün</a>
+    <a href="{{ url_for('index', category='depo') }}" class="cat-link">Depo</a>
+    <a href="{{ url_for('index', category='altınlar') }}" class="cat-link">Altınlar</a>
+</div>
+
+
+<div class="product-grid">
+    {% for p in products %}
+    <div class="product-card">
+        <img src="{{ url_for('static', filename='uploads/' + p[4]) }}" alt="{{ p[1] }}">
+        <h3>{{ p[1] }}</h3>
+        <p class="category">{{ p[3] }}</p>
+        <p class="price">{{ p[2] }} AZN</p>
+        <a href="{{ url_for('add_to_cart', product_id=p[0]) }}" class="add-to-cart-btn">Səbətə Əlavə Et</a>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+</body>
+</html>

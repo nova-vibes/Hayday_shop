@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Səbətim - HayDayLüks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>🛒 Sizin Səbətiniz</h2>
+        <hr>
+        
+        {% if cart_details %}
+            <div class="cart-items">
+                {% for item in cart_details %}
+                <div style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee;">
+                    <span>{{ item[1] }}</span>
+                    <strong>{{ item[2] }} AZN</strong>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div style="margin-top: 20px; text-align: right;">
+                <h3>Toplam: <span style="color: green;">{{ total_price }} AZN</span></h3>
+            </div>
+
+{% set ns = namespace(msg="Salam! Sifariş etmək istəyirəm:%0A") %}
+
+{% for item in cart_details %}
+    {% set ns.msg = ns.msg + "- " + item[1]|string + " (" + item[2]|string + " AZN)%0A" %}
+{% endfor %}
+
+{% set ns.msg = ns.msg + "%0AToplam: " + total_price|string + " AZN" %}
+
+<a href="https://wa.me/994707093536?text={{ ns.msg }}" 
+   style="display: block; background: #25D366; color: white; text-align: center; padding: 15px; text-decoration: none; border-radius: 8px; margin-top: 20px; font-weight: bold; font-size: 18px;">
+   ✅ Sifarişi WhatsApp-la Tamamla
+</a>
+            
+        <a href="{{ url_for('clear_cart') }}" 
+           style="display: inline-block; 
+                  background-color: #1565c0; 
+                  color: white; 
+                  text-decoration: none; 
+                  padding: 12px 25px; 
+                  border-radius: 25px; 
+                  font-weight: bold; 
+                  transition: 0.3s;">
+           SƏBƏTİ TƏMİZLƏ
+        </a>
+        {% else %}
+    <div style="text-align: center; padding: 50px 20px; background-color: #e3f2fd; border-radius: 15px; margin-top: 20px;">
+        <div style="font-size: 50px; margin-bottom: 20px;">🛒</div>
+        <h2 style="color: #1565c0; margin-bottom: 20px;">Səbətiniz hazırda boşdur</h2>
+        <p style="color: #546e7a; margin-bottom: 30px;">Görünür hələ heç bir məhsul seçməmisiniz.</p>
+        
+        <a href="{{ url_for('index') }}" 
+           style="display: inline-block; 
+                  background-color: #1565c0; 
+                  color: white; 
+                  text-decoration: none; 
+                  padding: 12px 25px; 
+                  border-radius: 25px; 
+                  font-weight: bold; 
+                  transition: 0.3s;">
+           ← Mağazaya Qayıt
+        </a>
+    </div>
+        {% endif %}
+</body>
+</html>
