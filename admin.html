@@ -56,7 +56,7 @@
                 <td>{{ p[2] }} AZN</td>
                 <td>{{ p[3] }}</td>
                 <td>
-                    <a href="{{ url_for('edit_product', id=p[0]) }}" class="btn-edit">📝 Düzenle</a>
+                    <a href="{{ url_for('edit_product', product_id=p.id }}"📝 Düzenle</a>
                     <a href="{{ url_for('delete_product', id=p[0]) }}" class="btn-del" onclick="return confirm('Məhsulu silmək istəyirsiniz?')">❌ Sil</a>
                 </td>
             </tr>

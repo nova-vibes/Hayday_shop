@@ -1,9 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import os
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'static/uploads'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+db=SQLAlchemy(app)
+
+BASE_DIR= os.path.abspath(os.path.dirname(__file__))
+UPLOAD_FOLDER= os.path.join(BASE_DIR,'static','uploads')
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'nexora_hayday_key_2008'
 
 # Bazanı başlanğıcda yaratmaq üçün funksiya
