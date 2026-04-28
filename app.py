@@ -8,6 +8,9 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://admin:lEEPGCGEeQ1xph85uxWizzt9vciIFjFv@dpg-d7og383eo5us73e70060-a/nexora_db_flb7'
 db=SQLAlchemy(app)
 
+with app.app_context():
+    db.create_all()
+
 BASE_DIR= os.path.abspath(os.path.dirname(__file__))
 UPLOAD_FOLDER= os.path.join(BASE_DIR,'static','uploads')
 
